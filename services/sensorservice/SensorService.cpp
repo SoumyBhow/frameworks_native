@@ -216,30 +216,6 @@ void SensorService::onFirstRef() {
                 registerSensor(new GameRotationVectorSensor(), !needGameRotationVector, true);
             }
 
-#ifdef USE_LEGACY_SENSORS_FUSION
-            else {
-                // Add Android virtual sensors if they're not already
-                // available in the HAL
-
-                if (virtualSensorsNeeds & (1<<SENSOR_TYPE_ROTATION_VECTOR)) {
-                    registerVirtualSensor( new LegacyRotationVectorSensor() );
-                }
-
-                if (virtualSensorsNeeds & (1<<SENSOR_TYPE_GRAVITY)) {
-                    registerVirtualSensor( new LegacyGravitySensor(list, count) );
-                }
-
-                if (virtualSensorsNeeds & (1<<SENSOR_TYPE_LINEAR_ACCELERATION)) {
-                    registerVirtualSensor( new LegacyLinearAccelerationSensor(list, count) );
-                }
-
-                if (virtualSensorsNeeds & (1<<SENSOR_TYPE_ROTATION_VECTOR)) {
-                    registerVirtualSensor( new LegacyOrientationSensor() );
-                }
-            }
-#endif
-
-
             if (hasAccel && hasMag) {
                 bool needGeoMagRotationVector =
                         (virtualSensorsNeeds & (1<<SENSOR_TYPE_GEOMAGNETIC_ROTATION_VECTOR)) != 0;
